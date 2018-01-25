@@ -6,14 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/1 | Shannon&#39;s Blog</title>
+  <title>URL Loading System 概览 | Shannon&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Shannon&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/01/index.html">
+  <meta name="description" content="一、简介URL Loading System 是一系列用来访问通过 URL 来定位的资源的类和协议。这项技术的核心在于基于 NSURL 这个类来访问资源，除了加载 URL 的类 NSURLSession 之外，我们把其他相关辅助类分为 5 类（如图所示）：  协议支持（protocol support） 认证和证书（authentication and credentials） cookie 存储">
+<meta name="keywords" content="技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="URL Loading System 概览">
+<meta property="og:url" content="http://yoursite.com/2018/01/25/URL-Loading-System-概览/index.html">
 <meta property="og:site_name" content="Shannon&#39;s Blog">
+<meta property="og:description" content="一、简介URL Loading System 是一系列用来访问通过 URL 来定位的资源的类和协议。这项技术的核心在于基于 NSURL 这个类来访问资源，除了加载 URL 的类 NSURLSession 之外，我们把其他相关辅助类分为 5 类（如图所示）：  协议支持（protocol support） 认证和证书（authentication and credentials） cookie 存储">
+<meta property="og:image" content="https://github.com/ShannonChenCHN/iOSLevelingUp/blob/master/iOSTutorials/网络/images/nsobject_hierarchy_2x.png?raw=true">
+<meta property="og:image" content="https://github.com/ShannonChenCHN/iOSLevelingUp/blob/master/iOSTutorials/网络/images/http_caching_policy_decisions_tree.png?raw=true">
+<meta property="og:updated_time" content="2018-01-25T14:45:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shannon&#39;s Blog">
+<meta name="twitter:title" content="URL Loading System 概览">
+<meta name="twitter:description" content="一、简介URL Loading System 是一系列用来访问通过 URL 来定位的资源的类和协议。这项技术的核心在于基于 NSURL 这个类来访问资源，除了加载 URL 的类 NSURLSession 之外，我们把其他相关辅助类分为 5 类（如图所示）：  协议支持（protocol support） 认证和证书（authentication and credentials） cookie 存储">
+<meta name="twitter:image" content="https://github.com/ShannonChenCHN/iOSLevelingUp/blob/master/iOSTutorials/网络/images/nsobject_hierarchy_2x.png?raw=true">
   
     <link rel="alternative" href="/atom.xml" title="Shannon&#39;s Blog" type="application/atom+xml">
   
@@ -175,36 +183,114 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-URL-Loading-System-概览" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      URL Loading System 概览
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/25/URL-Loading-System-概览/" class="archive-article-date">
+
+        
+        <a href="/2018/01/25/URL-Loading-System-概览/" class="archive-article-date">
   	<time datetime="2018-01-25T13:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-25</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/25/URL-Loading-System-概览/">URL Loading System 概览</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><p>URL Loading System 是一系列用来访问通过 URL 来定位的资源的类和协议。这项技术的核心在于基于 <code>NSURL</code> 这个类来访问资源，除了加载 URL 的类 <code>NSURLSession</code> 之外，我们把其他相关辅助类分为 5 类（如图所示）：</p>
+<ul>
+<li>协议支持（protocol support）</li>
+<li>认证和证书（authentication and credentials）</li>
+<li>cookie 存储（cookie storage）</li>
+<li>请求配置（configuration management）</li>
+<li>缓存管理（cache management）</li>
+</ul>
+<p><img src="https://github.com/ShannonChenCHN/iOSLevelingUp/blob/master/iOSTutorials/网络/images/nsobject_hierarchy_2x.png?raw=true" alt=""></p>
+<blockquote>
+<p>值得一提的是，iOS 7 以前的 Legacy URL Loading System<br> 是一套基于 <code>NSURLConnection</code> 的体系。</p>
+</blockquote>
+<h3 id="二、URL-加载"><a href="#二、URL-加载" class="headerlink" title="二、URL 加载"></a>二、URL 加载</h3><p>URL Loading System 最常用的类就是根据 URL 请求数据的类 <code>NSURLSession</code>。</p>
+<p><code>NSURLSession</code> 的 API 支持三种类型的 session：</p>
+<ul>
+<li>Default sessions：其行为跟 Foundation 中提供的其他 URL 加载方式类似，支持磁盘缓存，并且会把凭证（credentials）保存到 keychain 中。</li>
+<li>Ephemeral sessions：不会存储任何数据到磁盘上，所有的缓存、凭证都只会随着 session 保存在内存中，而且一旦这个 session 被清除了，这些缓存同时也会被清除。</li>
+<li>Background sessions：跟 <em>default sessions</em>  的行为基本类似，但是还支持后台驻留进程的数据传输，也就是说，当 app 被挂起时，还可以在后台继续传输数据。</li>
+</ul>
+<p>基于 <code>NSURLSession</code>，我们可以创建 3 种类型的 URL 加载任务：</p>
+<ul>
+<li>Data tasks：发送和接收 <code>NSData</code> 形式的数据。Data tasks 主要用来发送短暂的、有交互性的请求。Data tasks 可以分次返回数据，也可以一次性返回所有的数据。</li>
+<li>Download tasks：获取文件形式的数据，下载文件到本地，支持后台下载。</li>
+<li>Upload tasks：以文件的形式发送数据给服务器，也支持后台下载。</li>
+</ul>
+<h3 id="三、辅助类"><a href="#三、辅助类" class="headerlink" title="三、辅助类"></a>三、辅助类</h3><p>1.URL 请求</p>
+<p>URL Loading System 中的 <code>NSURLRequest</code> 将 URL 和请求协议相关的属性封装了起来。</p>
+<p>支持 HTTP 协议的 <code>NSURLRequest</code>/<code>NSMutableURLRequest</code> 类的就包括读取/设置请求方式、请求体、请求头等属性的方法。</p>
+<p>2.响应</p>
+<p>服务器返回的数据一般包括两部分：</p>
+<ul>
+<li>描述内容数据的元数据：描述内容数据的元数据往往是请求协议定义的，大部分协议的元数据包括 MIME type、 expected content length、text encoding (where applicable)以及这个响应对应的 URL。</li>
+<li>内容数据本身：也就是要请求的数据</li>
+</ul>
+<p>URL Loading System 中 <code>NSURLResponse</code> 的作用就是将元数据和内容数据本身封装起来。</p>
+<h3 id="四、重定向（改变请求）"><a href="#四、重定向（改变请求）" class="headerlink" title="四、重定向（改变请求）"></a>四、重定向（改变请求）</h3><p>有些协议，比如 HTTP，提供了一种重定向机制：当你发起一个请求时，而你请求的资源的 URL 已经发生改变了，服务器就会告诉客户端你请求的资源已经被转移到了新的 URL。</p>
+<p>我们可以通过实现相关的代理方法 <code>URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:</code>，来拦截重定向事件，并决定是否需要重定向到新的地址。</p>
+<h3 id="五、权限认证"><a href="#五、权限认证" class="headerlink" title="五、权限认证"></a>五、权限认证</h3><p>有些服务器会对某些特定的内容限制访问权限，只对提供了信任证书通过认证的用户提供访问资格。对于 web 服务器来说，受保护的内容被聚集到一个需要凭证才能访问的区域。在客户端上，有时也需要根据凭证来确定是否信任要访问的服务器。</p>
+<p>URL Loading System 提供了封装凭证（credentials）、封装保护区域（protected areas）和保存安全凭证（secure credential）的类：</p>
+<ul>
+<li><code>NSURLCredential</code>：封装一个含有认证信息（比如用户名和密码等）和持久化存储行为的凭证（credential）。</li>
+<li><code>NSURLProtectionSpace</code>：服务器上某个需要凭证才能访问的区域。</li>
+<li><code>NSURLCredentialStorage</code>：管理凭证的存储以及 <code>NSURLCredential</code> 和相应的 <code>NSURLProtectionSpace</code> 之间的映射关系。</li>
+<li><code>NSURLAuthenticationChallenge</code>：在客户端向有限制访问权限的服务器发起请求时，服务器会询问凭证信息，包括凭证、保护空间、认证错误信息、认证响应等。这个类会将这些信息封装起来。<code>NSURLAuthenticationChallenge</code> 实例通常被 <code>NSURLProtocol</code> 子类用来通知 URL Loading System 需要认证，以及在 <code>NSURLSession</code> 的代理方法中用来处理认证。</li>
+</ul>
+<h4 id="六、缓存管理"><a href="#六、缓存管理" class="headerlink" title="六、缓存管理"></a>六、缓存管理</h4><p>URL Loading System 提供了 app 级别的 HTTP 响应缓存，在使用 <code>NSURLSession</code> 发起请求时，我们可以通过设置 <code>NSURLRequest</code> 和 <code>NSURLSessionConfiguration</code> 的缓存策略（cache policy）来决定是否缓存以及如何处理缓存。同时，我们还可以通过实现 <code>URLSession:dataTask:willCacheResponse:completionHandler:</code> 方法来针对特定的 URL 设置缓存策略。</p>
+<p>实际上，不是所有请求的响应都能被缓存起来，URL Loading System 目前只支持对 http 和 https 请求的响应进行缓存。</p>
+<p>URL Loading System 中提供的管理缓存的类有以下两个：</p>
+<ul>
+<li><code>NSURLCache</code>：通过这个类可以设置缓存大小和位置，以及读取和存储各个请求的 <code>NSCachedURLResponse</code>。</li>
+<li><code>NSCachedURLResponse</code>：封装了请求元数据（一个  <code>NSURLResponse</code> 对象）和实际响应内容（一个 <code>NSData</code> 对象）。</li>
+</ul>
+<p><code>NSURLRequest</code> 默认的 cache policy 是 <code>NSURLRequestUseProtocolCachePolicy</code>，下图就是一个采用了 <code>NSURLRequestUseProtocolCachePolicy</code> 的 HTTP 请求的缓存机制流程图（<a href="https://developer.apple.com/documentation/foundation/nsurlrequestcachepolicy?language=objc" target="_blank" rel="noopener">来源</a>）：</p>
+<p><img src="https://github.com/ShannonChenCHN/iOSLevelingUp/blob/master/iOSTutorials/网络/images/http_caching_policy_decisions_tree.png?raw=true" alt=""></p>
+<h4 id="七、cookie-存储"><a href="#七、cookie-存储" class="headerlink" title="七、cookie 存储"></a>七、cookie 存储</h4><p>URL Loading System 提供了 app 级别的 cookie 存储机制。URL Loading System 中涉及到 cookie 操作的两个类分别是：</p>
+<ul>
+<li><code>NSHTTPCookieStorage</code>：这个类提供了管理 cookie 存储的功能。</li>
+<li><code>NSHTTPCookie</code>：用来封装 cookie 数据和属性的类。</li>
+</ul>
+<p><code>NSURLRequest</code> 提供了 <code>HTTPShouldHandleCookies</code> 属性来设置请求发起时，是否需要 cookie manager 自动处理 cookie。在 <code>UIWebView</code> 中，系统会通过 cookie manager 自动将 cookie 缓存起来。</p>
+<h3 id="八、协议支持"><a href="#八、协议支持" class="headerlink" title="八、协议支持"></a>八、协议支持</h3><p>URL Loading System 本身只支持 http、https、file、ftp 和 data 协议。<code>NSURLProtocol</code> 是一个抽象类，提供了处理 URL 加载的基础设施。通过实现自定义的 <code>NSURLProtocol</code> 子类，可以让我们的 app 支持自定义的数据传输协议。</p>
+<p>另外，对于 <code>NSURLProtocol</code> 核心功能，官方文档中并没有着重提到，但是却是最重要的一点：<strong>借助它，你不必改动应用在网络调用上的其他部分，就可以改变 URL 加载行为的全部细节</strong>。运用这一点，我们可以自由发挥，做很多想做的事情，比如：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/5572258/ios-webview-remote-html-with-local-image-files" target="_blank" rel="noopener">拦截图片加载请求，转为从本地文件加载</a></li>
+<li><a href="https://github.com/cysp/STWebPDecoder" target="_blank" rel="noopener">在 UIWebView 中加载 webp 图片</a></li>
+<li><a href="https://github.com/ShannonChenCHN/iOSLevelingUp/issues/55#issuecomment-300365305" target="_blank" rel="noopener">通过缓存静态资源实现 UIWebView 的预加载优化</a></li>
+<li><a href="https://github.com/rnapier/RNCachingURLProtocol" target="_blank" rel="noopener">UIWebView 离线缓存</a></li>
+<li><a href="https://draveness.me/%5Bhttps://github.com/AliSoftware/OHHTTPStubs%5D" target="_blank" rel="noopener">为了测试对HTTP返回内容进行mock和stub</a></li>
+<li><a href="https://github.com/Flipboard/FLEX/tree/master/Classes/Network" target="_blank" rel="noopener">实现一个 In-App 网络抓包工具</a></li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>URL Loading System 涵盖了 iOS 网络编程的方方面面，通过以上的梳理，相信我们已经对 iOS 网络编程有了一个整体的了解。</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ul>
+<li><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem" target="_blank" rel="noopener">URL Session Programming Guide</a></li>
+<li><a href="https://developer.apple.com/documentation/foundation/url_loading_system" target="_blank" rel="noopener">URL Loading System - API Reference</a></li>
+<li><a href="http://nshipster.cn/nsurlprotocol/" target="_blank" rel="noopener">NSURLProtocol - NSHipster</a></li>
+<li><a href="http://nshipster.cn/nsurlcache/" target="_blank" rel="noopener">NSURLCache - NSHipster</a></li>
+<li><a href="https://www.raywenderlich.com/158106/urlsession-tutorial-getting-started" target="_blank" rel="noopener">URLSession Tutorial: Getting Started - Ray Wenderlich</a></li>
+<li><a href="https://www.jianshu.com/p/56fc18937d09?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">HTTPS接口加密和身份认证</a></li>
+<li><a href="https://www.jianshu.com/p/5701aae1e3f3" target="_blank" rel="noopener">[iOS网络请求] - 身份认证</a></li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -216,364 +302,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/01/25/URL-Loading-System-概览/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/24/如何养成写作的习惯/" class="archive-article-date">
-  	<time datetime="2018-01-24T13:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/24/如何养成写作的习惯/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何养成写作的习惯</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/24/如何养成写作的习惯/">如何养成写作的习惯</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/21/2018-01-21/" class="archive-article-date">
-  	<time datetime="2018-01-21T02:17:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/21/2018-01-21/">2018-01-21</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/20/一个轻量级的数据驱动列表框架-YHListKit/" class="archive-article-date">
-  	<time datetime="2018-01-20T15:14:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/20/一个轻量级的数据驱动列表框架-YHListKit/">一个轻量级的数据驱动列表框架 YHListKit</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/17/2018-01-17/" class="archive-article-date">
-  	<time datetime="2018-01-17T14:43:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/17/2018-01-17/">2018.01.17</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/16/2018-01-16/" class="archive-article-date">
-  	<time datetime="2018-01-16T14:25:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/16/2018-01-16/">2018.01.16</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/15/2018-01-15/" class="archive-article-date">
-  	<time datetime="2018-01-15T15:31:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/15/2018-01-15/">2018.01.15</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/15/书单/" class="archive-article-date">
-  	<time datetime="2018-01-15T14:30:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/15/书单/">书单</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">收藏</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/14/2018-01-14/" class="archive-article-date">
-  	<time datetime="2018-01-14T14:55:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/14/2018-01-14/">2018.01.14</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/14/如何才能成为一名-BAT-级别（优秀）的工程师？/" class="archive-article-date">
-  	<time datetime="2018-01-14T14:04:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/14/如何才能成为一名-BAT-级别（优秀）的工程师？/">如何才能成为一名 BAT 级别（优秀）的工程师？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/01/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/01/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -597,8 +424,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
