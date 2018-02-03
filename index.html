@@ -177,6 +177,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018-02-03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/03/2018-02-03/">2018-02-03</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/03/2018-02-03/" class="archive-article-date">
+  	<time datetime="2018-02-03T14:01:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="程序设计"><a href="#程序设计" class="headerlink" title="程序设计"></a>程序设计</h3><p>昨天看到有人分享这篇文章<a href="https://hjgitbook.gitbooks.io/ios/content/01-thinking/02-how-to-improving-the-design-powers.html" target="_blank" rel="noopener">《提高设计能力的有效手段》</a>，其中讲到提高设计能力的几种有效手段：</p>
+<ol>
+<li>追求卓越的态度；</li>
+<li>有意识地锻炼自己的抽象能力，学会看本质；</li>
+<li>思想比技巧更重要，思想是根本，技巧是手段；</li>
+<li>通过学习、阅读开源项目开阔眼界，获得启发；</li>
+<li>不断尝试设计，找到自己的设计风格、原则；</li>
+<li>不要被语言和平台所限制；</li>
+<li>领悟设计的本质：没有设计。</li>
+</ol>
+<p>以我自己最近开源的 YHListKit 为例：</p>
+<ol>
+<li>其实用苹果提供的 API 实现列表，是完全没问题的，但是当 feeds 流列表中的内容是多样、复杂的话，就不太好实现以及维护了，所以我自己也一直在探索是否有更好的解法，最终就有了这个框架。</li>
+<li>YHListKit 的抽象模型就是 <code>view model 对应 UI 层</code>。虽然这个框架是基于 <code>UICollectionView</code> 的，但是实际上对于 <code>UITableView</code> 也是一样的模型。</li>
+<li>YHListKit 中用到了 Adapter 模式，和消息转发拦截机制，这些其实都是术，也就是技巧，其实我们的目标是实现真正的数据驱动，让接口更简单，让代理方法可以回调出来，技巧是为实现我们的目标而服务的，所以可以说目标其实就决定了我们的思想。手段可以变，但是思想是万变不离其宗的。</li>
+<li>YHListKit 在早期未成形时，设计的比较耦合，模块划分不够清晰，在参考了 bs 和 IGListKit 等优秀的方案后，才实现真正的设计。</li>
+<li>YHListKit 的诞生不是一蹴而就的，是经历过大量实践，不断重构，不断尝试，不断完善才有了现在的设计。</li>
+<li>即便是换成了 Swift、或者安卓平台，我想大体思想还是不变的，程序的本质其实就是数据的处理。</li>
+<li>设计的本质究竟是什么，我目前能力有限，资历尚且，还不好评价。</li>
+</ol>
+<h3 id="简历"><a href="#简历" class="headerlink" title="简历"></a>简历</h3><p>花了整整一上午的时间把简历重新改写了一遍，看上去更简洁明了了，可能是因为现在比之前的目标更清晰更明确了。</p>
+<p>写简历时才发现，原来独立开发项目是技术上最没有深度积累的一段经历[捂脸]，甚至可以抹掉，因为做了很多，但是每一个任务都不精，还真像 bang 说的那样，独立开发是很难深入的，如果要想提高技术能力，最好去个稍微大点的团队。当然这大半年时间，也不是说没有收获，毕竟很多东西都是第一次从零开始做的，而且是需要独立完成的。</p>
+<p>改简历时的几点感受：</p>
+<ul>
+<li>想想人家怎么看简历的，你写那么多那么乱，人家哪有时间看，而且还抓不到重点</li>
+<li>简历排版很烂，或者套模板，精通xxxx，熟悉 JSON/XML ……，这种简历看上去就很 low</li>
+<li>做减法，突出重点，删掉多余的</li>
+<li>想想面试时，人家会怎么问，所以要对简历上的每一句话都要有底，不太了解的干脆不写，要写就要做好充分准备</li>
+<li>简历就是一张个人名片，写简历其实跟写代码一样，也是需要不断重构的</li>
+<li>通过参考别人的优秀简历，可以开阔眼界，学习别人是怎么成长的</li>
+</ul>
+<h3 id="打球⛹"><a href="#打球⛹" class="headerlink" title="打球⛹"></a>打球⛹</h3><p>上次打球已经是一个多月前了，下午本来跟朋友约了去打篮球，结果跑到财大打了半个小时，被寒风给“吹”回来了，实在是太冷了🤧。</p>
+<h3 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h3><p>中午厚着脸皮在微博上艾特了圈内的各位大 v，帮我转发自己新开源的框架，没想到反响还不错，在 GitHub 一下午就拿了 16 颗星（毕竟现在是淡季[捂脸]）。索性下午就把项目又完善了一下，增加了 CocoaPods 的支持，新添加了漂亮的 badge。</p>
+<p>今天微博上有些朋友给了建议：</p>
+<ul>
+<li>分享到微博时，链接要放在明显一点的地方，不然不好找。</li>
+<li>分享时，配上效果图，更容易让大家有直观的感受，相比直接看图片，比点一个链接再打开的成本更低。（到网上搜了下，发现 Chrome 的开发工具就自带截图功能，效果还真不错）</li>
+</ul>
+<h3 id="环境和团队对个人的影响"><a href="#环境和团队对个人的影响" class="headerlink" title="环境和团队对个人的影响"></a>环境和团队对个人的影响</h3><p>在一个团队中，团队的价值导向，共同诉求会在很大程度上影响你的发展方向，比如说在一个业务为导向、不重视技术的团队中，你很可能会逐渐偏离技术重心，慢慢养成“实现功能万事大吉”的习惯。其实，也可以说环境对人的影响很大，比如说你身边的人都不怎么关心技术，那么你也就很可能认为技术没啥价值，花那么大精力去学习研究有什么用，另一方面，人是有从众心理的，所以很难不随波逐流。</p>
+<p>实际上，大多数的团队很可能就像上面说的那样缺乏技术氛围，但是，不要忘了这是互联网时代，开源社区这种地方最适合我们去进行真正的分享、交流，俗话说，“物以类聚，人以群分”。大概就是这个道理吧。</p>
+<p>另外，要补充的一点是，一个团队的风格往往很大程度上取决于这个团队的 leader，当然，leader 不能决定一切，毕竟成长主要靠个人，但是 leader 的带头作用很重要，俗话说，“兵熊熊一个，将熊熊一窝”。而且，很多情况下，团队里的成员可能就是 leader 招进来的，什么样的将军带什么样的兵。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/03/2018-02-03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-2018-02-02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -826,83 +940,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/01/25/URL-Loading-System-概览/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-如何养成写作的习惯" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/如何养成写作的习惯/">如何养成写作的习惯</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/24/如何养成写作的习惯/" class="archive-article-date">
-  	<time datetime="2018-01-24T13:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>人们往往高估了激情的能量，却低估了坚持的力量。</p>
-</blockquote>
-<p>说好每天都要写点东西，这两天又中断了。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/24/如何养成写作的习惯/">展开全文 >></a>
         </p>
       
 
