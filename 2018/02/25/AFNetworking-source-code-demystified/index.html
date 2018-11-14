@@ -5,6 +5,54 @@
 <blockquote>
 <p>注：这篇文章不会逐行分析源码，具体的代码注释见 <a href="https://github.com/ShannonChenCHN/iOSLevelingUp/tree/master/ReadingSourceCode/AFNetworkingNotes/AFNetworking-3.1.0" target="_blank" rel="noopener">这里</a>。</p>
 </blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>一、架构</li>
+<li>二、核心逻辑</li>
+<li>三、AFURLSessionManager<ul>
+<li>3.1 线程</li>
+<li>3.2 AFURLSessionManagerTaskDelegate</li>
+<li>3.3 NSProgress</li>
+<li>3.4 NSSecureCoding</li>
+<li>3.5 _AFURLSessionTaskSwizzling</li>
+</ul>
+</li>
+<li>四、AFURLRequestSerialization<ul>
+<li>4.1 构建普通请求</li>
+<li>4.2 构建 multipart 请求</li>
+</ul>
+</li>
+<li>五、AFURLResponseSerialization<ul>
+<li>5.1 <code>-validateResponse:data:error:</code> 方法</li>
+<li>5.2 <code>-responseObjectForResponse:data:error:</code> 方法</li>
+</ul>
+</li>
+<li>六、AFSecurityPolicy<ul>
+<li>6.1 预备知识点<ul>
+<li>6.1.1 为什么要使用 HTTPS</li>
+<li>6.1.2 HTTPS 的出现</li>
+<li>6.1.3 SSL/TLS 协议</li>
+<li>6.1.4 HTTPS 与 HTTP 的区别是什么？</li>
+<li>6.1.5 HTTPS 连接的建立过程</li>
+<li>6.1.6 HTTPS 传输时是如何验证证书的？怎样应对中间人伪造证书？</li>
+<li>6.1.7 Certificate Pinning 是什么？</li>
+</ul>
+</li>
+<li>6.2 AFSecurityPolicy 的实现</li>
+</ul>
+</li>
+<li>七、AFNetworkReachabilityManager</li>
+<li>八、UIKit 扩展</li>
+<li>九、AFNetworking 2.x </li>
+<li>十、AFNetworking 的价值<ul>
+<li>10.1 请求调度：NSURLConnection + NSOperation</li>
+<li>10.2 更高层次的抽象</li>
+<li>10.3 block</li>
+<li>10.4 模块化</li>
+</ul>
+</li>
+<li>十一、问题</li>
+<li>十二、收获</li>
+</ul>
 <h3 id="一、架构"><a href="#一、架构" class="headerlink" title="一、架构"></a>一、架构</h3><p>AFNetworking 一共分为 5 个模块，2 个核心模块和 3 个辅助模块：</p>
 <ul>
 <li>Core<ul>
